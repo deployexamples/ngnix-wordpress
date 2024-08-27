@@ -248,12 +248,12 @@ sudo apt install php-mysql
 
 This command will install the MySQLi extension, which is bundled with the php-mysql package.
 
-### Step 2: Restart Apache
+### Step 2: Restart Nginx
 
 After installing the extension, restart Apache to load the new PHP configuration:
 
 ```bash
-sudo systemctl restart apache2
+sudo systemctl restart nginx
 ```
 
 ### Step 3: MySQL fpm
@@ -392,8 +392,8 @@ sudo mysql -u root -p
 ```
 
 ```sql
-CREATE USER 'your_database_user'@'localhost' IDENTIFIED BY 'your_database_password';
-GRANT ALL PRIVILEGES ON your_database_name.* TO 'your_database_user'@'localhost';
+CREATE USER 'azuredeploy'@'localhost' IDENTIFIED BY 'azuredeploy';
+GRANT ALL PRIVILEGES ON wp_db.* TO 'azuredeploy'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
@@ -411,10 +411,16 @@ sudo mysql -u root -p
 Check user privileges:
 
 ```sql
-SHOW GRANTS FOR 'your_database_user'@'localhost';
+SHOW GRANTS FOR 'azuredeploy'@'localhost';
 ```
 
-### 5. Verify Database Name
+### 5. Create Database
+
+```sql
+CREATE DATABASE wp_db;
+```
+
+### 6. Verify Database Name
 
 Ensure the database exists:
 
@@ -425,7 +431,7 @@ SHOW DATABASES;
 If necessary, grant the appropriate privileges:
 
 ```sql
-GRANT ALL PRIVILEGES ON your_database_name.* TO 'your_database_user'@'localhost' IDENTIFIED BY 'your_database_password';
+GRANT ALL PRIVILEGES ON wp_db.* TO 'azuredeploy'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
